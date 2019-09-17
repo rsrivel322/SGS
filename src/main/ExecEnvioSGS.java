@@ -20,13 +20,11 @@ public class ExecEnvioSGS {
 		TransactionServiceImplService sendService = new TransactionServiceImplService();
 		SgsTransactionService sendSGS=sendService.getTransactionServiceImplPort();
 		 Authorization sendAuth = new Authorization();
-		 envioSGS sgsNew=new envioSGS();
+		 ClassEnvioXML sgsNew=new ClassEnvioXML();
 		 sgsNew.setDocumentId("F710-10136678");
 		 sgsNew.setInRoutFolder("/home/rrossel/Descargas/Rivel_Rossel/000 TRABAJO/2019 - 09 SEPTIEMBRE/16/SGS prueba java/");
 		 sgsNew.setOutRoutFolder("/home/rrossel/Descargas/Rivel_Rossel/000 TRABAJO/2019 - 09 SEPTIEMBRE/16/SGS prueba java/");
 		 sgsNew.setDocumentType(Integer.parseInt(JOptionPane.showInputDialog("ingrese el tipo de documento:")));
-		 
-		//String[] files = new File("/").list();
 		 
 		byte[] xmlByte =sgsNew.xmlToByte(sgsNew.getInRoutFolder()+sgsNew.getDocumentId());
 		 TransactionResponse response=null;
@@ -63,15 +61,15 @@ public class ExecEnvioSGS {
 		                     //salida cdr
 		 byte[] cdrFileXml=response.getCdrFile();
 		 String cdrFile64 = Base64.getEncoder().encodeToString(cdrFileXml);
-		 envioSGS.conversorXMLPDF(cdrFileXml,sgsNew.getOutRoutFolder()+"CDR/", sgsNew.getDocumentId(), ".xml");
+		 ClassEnvioXML.conversorXMLPDF(cdrFileXml,sgsNew.getOutRoutFolder()+"CDR/", sgsNew.getDocumentId(), ".xml");
 
 		                     //salida xml
 		 byte[] xmlSigned=response.getXmlSigned();;
-		 envioSGS.conversorXMLPDF(xmlSigned,sgsNew.getOutRoutFolder()+"XML/", sgsNew.getDocumentId(), ".xml");
+		 ClassEnvioXML.conversorXMLPDF(xmlSigned,sgsNew.getOutRoutFolder()+"XML/", sgsNew.getDocumentId(), ".xml");
 		 
 		                     //salida pdf
 		 byte[] pdfFile =response.getPdfFile();
-		 envioSGS.conversorXMLPDF(pdfFile,sgsNew.getOutRoutFolder()+"PDF/", sgsNew.getDocumentId(), ".pdf");
+		 ClassEnvioXML.conversorXMLPDF(pdfFile,sgsNew.getOutRoutFolder()+"PDF/", sgsNew.getDocumentId(), ".pdf");
 		 
 		 //IMPRIMIR CDR
 		 System.out.println("CDR: "+cdrFile64);
